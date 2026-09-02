@@ -46,11 +46,11 @@ end
 class Redactdpdf < Formula
   desc     "PDF metadata scrubber, linearizer and timestamp setter"
   homepage "https://github.com/NotADeckChair/redactdPDF"
-  url      "https://api.github.com/repos/NotADeckChair/redactdPDF/tarball/v0.3.2.0831.1016",
+  url      "https://api.github.com/repos/NotADeckChair/redactdPDF/tarball/v0.3.2.0902.1209",
            using: GitHubPrivateRepositoryDownloadStrategy
-  sha256   "15cefd0528700471275adcd28427cb4efc001367156b099ea3300fc79d9c1292"
+  sha256   "2a3fa6d19f25951ba4ebd3cbb5762140b1517121a6d3ded32aa81e705219bec8"
   license  "Apache-2.0"
-  version  "0.3.2.0831.1016"
+  version  "0.3.2.0902.1209"
 
   # ── Runtime dependencies ───────────────────────────────────────────────────
   depends_on "python@3.11"
