@@ -48,7 +48,7 @@ class Redactdpdf < Formula
   homepage "https://github.com/NotADeckChair/redactdPDF"
   url      "https://api.github.com/repos/NotADeckChair/redactdPDF/tarball/v0.3.2.0903.1435",
            using: GitHubPrivateRepositoryDownloadStrategy
-  sha256   "187a94754661e8fa8f745399e3b59aedadcdf45e4bdaee553e88d93a92facae2"
+  sha256   "cae74dceb6af83ea985e3c54931688574beb56a530f7dc29785596d2ff27ddef"
   license  "Apache-2.0"
   version  "0.3.2.0903.1435"
 
