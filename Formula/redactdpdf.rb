@@ -46,11 +46,11 @@ end
 class Redactdpdf < Formula
   desc     "PDF metadata scrubber, linearizer and timestamp setter"
   homepage "https://github.com/NotADeckChair/redactdPDF"
-  url      "https://api.github.com/repos/NotADeckChair/redactdPDF/tarball/v0.4.0.0904.2152",
+  url      "https://api.github.com/repos/NotADeckChair/redactdPDF/tarball/v0.4.1-50ede2c",
            using: GitHubPrivateRepositoryDownloadStrategy
-  sha256   "7376b12a161344900faf2f02a1a7f57210e6afb9a3140306e8caad41fd46a6d4"
+  sha256   "c32d4609a21c8ffb9f83bac1e1fc5f18cd4e044189bd6c847619e15e10293cb1"
   license  "Apache-2.0"
-  version  "0.4.0.0904.2152"
+  version  "0.4.1-50ede2c"
 
   # ── Runtime dependencies ───────────────────────────────────────────────────
   depends_on "python@3.11"
@@ -60,9 +60,28 @@ class Redactdpdf < Formula
   depends_on "qpdf"
 
   # ── Python package dependencies ────────────────────────────────────────────
+  # rich — terminal display with colour and markup
   resource "rich" do
     url    "https://files.pythonhosted.org/packages/source/r/rich/rich-13.7.1.tar.gz"
     sha256 "9be308cb1fe2f1f57d67ce99e95af38a1e2bc71ad9813b0e247cf7ffbcc3a432"
+  end
+
+  # pikepdf — writes PDF info dict dates with zero XMP toolkit fingerprint
+  resource "pikepdf" do
+    url    "https://files.pythonhosted.org/packages/1e/d4/f4383bb3ac90cb322cb340cd4253bfc19f80819a97d61a49077ab3a0581e/pikepdf-10.12.0.tar.gz"
+    sha256 "cbc790243a333a2c87bb4c1a69e3d7036b4a7f43c7fafc8ec7cee06985b48ae9"
+  end
+
+  # Pillow — pikepdf dependency (image handling)
+  resource "Pillow" do
+    url    "https://files.pythonhosted.org/packages/1c/3d/bb7fca845737cf9d7dbde16ed1843984665ff2e0a518f5db43e77ec540b9/pillow-12.3.0.tar.gz"
+    sha256 "3b8182a766685eaa002637e28b4ec8d6b18819a0c71f579bf0dbaa5830297cce"
+  end
+
+  # lxml — pikepdf dependency (XML/metadata parsing)
+  resource "lxml" do
+    url    "https://files.pythonhosted.org/packages/23/ad/28ecd7cb894d172f3c9c80a075eeeb2017ac62e3632cee05a5f9493547eb/lxml-6.1.3.tar.gz"
+    sha256 "45222d94ddd511536f3b2f7d9deae3b2339b4ce0f075f1ca25703b07cad9dd21"
   end
 
   # ── Install ────────────────────────────────────────────────────────────────
@@ -74,6 +93,15 @@ class Redactdpdf < Formula
     # Install Python dependencies into the venv
     pip = venv/"bin/pip"
     resource("rich").stage do
+      system pip, "install", "--no-deps", "."
+    end
+    resource("Pillow").stage do
+      system pip, "install", "--no-deps", "."
+    end
+    resource("lxml").stage do
+      system pip, "install", "--no-deps", "."
+    end
+    resource("pikepdf").stage do
       system pip, "install", "--no-deps", "."
     end
 
