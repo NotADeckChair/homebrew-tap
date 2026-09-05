@@ -46,14 +46,14 @@ end
 class Redactdpdf < Formula
   desc     "PDF metadata scrubber, linearizer and timestamp setter"
   homepage "https://github.com/NotADeckChair/redactdPDF"
-  url      "https://api.github.com/repos/NotADeckChair/redactdPDF/tarball/v0.4.1-1077a42",
+  url      "https://api.github.com/repos/NotADeckChair/redactdPDF/tarball/v0.4.1-bc6ddbb",
            using: GitHubPrivateRepositoryDownloadStrategy
-  sha256   "951b808b932bc0802516058fde4a704d394b35bdde943cd3389ba927c3c034bf"
+  sha256   "f7b08116bbc863895065226d0b9da5761ae892b4da7e24f82403bac2814a2aba"
   license  "Apache-2.0"
-  version  "0.4.1-1077a42"
+  version  "0.4.1-bc6ddbb"
 
   # ── Runtime dependencies ───────────────────────────────────────────────────
-  depends_on "python@3.11"
+  depends_on "python@3.14"
   depends_on "mat2"
   depends_on "exiftool"
   depends_on "ghostscript"
@@ -78,7 +78,7 @@ class Redactdpdf < Formula
   def install
     # Create isolated virtualenv in libexec
     venv = libexec/"venv"
-    system Formula["python@3.11"].opt_bin/"python3.11", "-m", "venv", venv
+    system Formula["python@3.14"].opt_bin/"python3.14", "-m", "venv", venv
 
     # Install Python dependencies into the venv
     pip = venv/"bin/pip"
