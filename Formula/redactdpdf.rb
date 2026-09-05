@@ -46,11 +46,11 @@ end
 class Redactdpdf < Formula
   desc     "PDF metadata scrubber, linearizer and timestamp setter"
   homepage "https://github.com/NotADeckChair/redactdPDF"
-  url      "https://api.github.com/repos/NotADeckChair/redactdPDF/tarball/v0.4.1-50ede2c",
+  url      "https://api.github.com/repos/NotADeckChair/redactdPDF/tarball/v0.4.1-1077a42",
            using: GitHubPrivateRepositoryDownloadStrategy
-  sha256   "c32d4609a21c8ffb9f83bac1e1fc5f18cd4e044189bd6c847619e15e10293cb1"
+  sha256   "951b808b932bc0802516058fde4a704d394b35bdde943cd3389ba927c3c034bf"
   license  "Apache-2.0"
-  version  "0.4.1-50ede2c"
+  version  "0.4.1-1077a42"
 
   # ── Runtime dependencies ───────────────────────────────────────────────────
   depends_on "python@3.11"
@@ -85,14 +85,9 @@ class Redactdpdf < Formula
     resource("rich").stage do
       system pip, "install", "--no-deps", "."
     end
-
-    # pikepdf requires binary wheels for its C++ extension.
-    # Install directly via pip to get the correct pre-built wheel
-    # for the current platform rather than building from source.
-    system pip, "install",
-           "pikepdf==10.12.0",
-           "Pillow==12.3.0",
-           "lxml==6.1.3"
+    resource("pikepdf").stage do
+      system pip, "install", "."
+    end
 
     # Install application source files into libexec
     libexec.install "redactd.py"
