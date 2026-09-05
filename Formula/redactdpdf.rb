@@ -67,21 +67,11 @@ class Redactdpdf < Formula
   end
 
   # pikepdf — writes PDF info dict dates with zero XMP toolkit fingerprint
+  # Note: pikepdf's dependencies (Pillow, lxml) are installed via pip directly
+  # as they require platform-specific binary wheels.
   resource "pikepdf" do
     url    "https://files.pythonhosted.org/packages/1e/d4/f4383bb3ac90cb322cb340cd4253bfc19f80819a97d61a49077ab3a0581e/pikepdf-10.12.0.tar.gz"
     sha256 "cbc790243a333a2c87bb4c1a69e3d7036b4a7f43c7fafc8ec7cee06985b48ae9"
-  end
-
-  # Pillow — pikepdf dependency (image handling)
-  resource "Pillow" do
-    url    "https://files.pythonhosted.org/packages/1c/3d/bb7fca845737cf9d7dbde16ed1843984665ff2e0a518f5db43e77ec540b9/pillow-12.3.0.tar.gz"
-    sha256 "3b8182a766685eaa002637e28b4ec8d6b18819a0c71f579bf0dbaa5830297cce"
-  end
-
-  # lxml — pikepdf dependency (XML/metadata parsing)
-  resource "lxml" do
-    url    "https://files.pythonhosted.org/packages/23/ad/28ecd7cb894d172f3c9c80a075eeeb2017ac62e3632cee05a5f9493547eb/lxml-6.1.3.tar.gz"
-    sha256 "45222d94ddd511536f3b2f7d9deae3b2339b4ce0f075f1ca25703b07cad9dd21"
   end
 
   # ── Install ────────────────────────────────────────────────────────────────
@@ -95,15 +85,14 @@ class Redactdpdf < Formula
     resource("rich").stage do
       system pip, "install", "--no-deps", "."
     end
-    resource("Pillow").stage do
-      system pip, "install", "--no-deps", "."
-    end
-    resource("lxml").stage do
-      system pip, "install", "--no-deps", "."
-    end
-    resource("pikepdf").stage do
-      system pip, "install", "--no-deps", "."
-    end
+
+    # pikepdf requires binary wheels for its C++ extension.
+    # Install directly via pip to get the correct pre-built wheel
+    # for the current platform rather than building from source.
+    system pip, "install",
+           "pikepdf==10.12.0",
+           "Pillow==12.3.0",
+           "lxml==6.1.3"
 
     # Install application source files into libexec
     libexec.install "redactd.py"
